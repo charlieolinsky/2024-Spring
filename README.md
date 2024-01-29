@@ -1,2 +1,7 @@
 # 2024-Spring
-CPS493-03: Web Programming
+
+## The best class at New Paltz
+
+### Todo
+
+- Create another repo
