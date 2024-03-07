@@ -60,41 +60,48 @@ products.value = getProducts();
 .product-list {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-around;
 }
-
 .card {
   flex-basis: 15rem;
   flex-grow: 1;
   margin: 0.5rem;
 }
-
+h3 {
+  font-weight: bold;
+}
 .price {
-  font-family: bold;
+  font-weight: bold;
   font-size: xx-large;
   color: hotpink;
   float: right;
 }
-
 .flyout {
   position: fixed;
   top: 0;
   right: 0;
   width: 20rem;
   height: 100%;
-  background-color: lightgray;
+  background-color: white;
+  border: 1px solid #ccc;
   box-shadow: -1px 0 5px 0 rgba(0, 0, 0, 0.5);
   z-index: 100;
   transform: translateX(80%);
   transition: transform 1s;
+  padding: 1rem;
 }
-
 .flyout.open,
 .flyout:hover {
   transform: translateX(0);
 }
-
-h3 {
-  font-weight: bold;
+.cart li {
+  display: flex;
+  align-items: center;
+  margin: 1rem 0;
+}
+.cart img {
+  width: 3rem;
+  height: 3rem;
+  margin-right: 1rem;
 }
 </style>
