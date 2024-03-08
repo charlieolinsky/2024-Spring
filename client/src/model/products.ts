@@ -8,7 +8,7 @@ export interface Product {
     discountPercentage: number;
     rating: number;
     stock: number;
-    brand: string;
+    brand?: string; //A question mark indicates that the property is optional.
     category: string;
     thumbnail: string;
     images: string[];

@@ -1,26 +1,47 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { type Product, getProducts } from "@/model/products";
 
+//This is a common pattern for retreiving data from an API
 const products = ref([] as Product[]);
+products.value = getProducts();
 
+//Why is there a type here? There shouldnt be
 type CartItem = {
   product: Product;
   quantity: number;
 };
-
 const cart = ref([] as CartItem[]);
 
 function addToCart(product: Product) {
+  //Does this product exist yet?
   const item = cart.value.find((item) => item.product.id === product.id);
+
+  //If so, increment the quantity
+  if (item) {
+    item.quantity++;
+  } else {
+    //if not, add it to the cart
+    cart.value.push({ product, quantity: 1 });
+  }
+}
+
+//Here is the arrow function sytnax
+const addToCart2 = (product: Product) => {
+  const itemPredicate = (item: CartItem) => item.product.id === product.id;
+  //find() takes a function as a parameter
+  const item = cart.value.find(itemPredicate);
+
   if (item) {
     item.quantity++;
   } else {
     cart.value.push({ product, quantity: 1 });
   }
-}
+};
 
-products.value = getProducts();
+const total = computed(() =>
+  cart.value.reduce((sum, item) => sum + item.product.price * item.quantity, 0)
+);
 </script>
 
 <template>
@@ -32,6 +53,7 @@ products.value = getProducts();
       <div class="card-content">
         <p class="price">${{ product.price }}</p>
         <h3>{{ product.title }}</h3>
+        <i>{{ product.brand }}</i>
         <p class="desc">{{ product.description }}</p>
         <button class="button is-primary" @click="addToCart(product)">
           Add to Cart
@@ -49,9 +71,7 @@ products.value = getProducts();
           {{ item.product.title }} x {{ item.quantity }}
         </li>
       </ul>
-      {{ cart.length }} items in cart for a total of ${{
-        cart.reduce((sum, item) => sum + item.product.price * item.quantity, 0)
-      }}
+      {{ cart.length }} items in cart for a total of ${{ total }}
     </div>
   </div>
 </template>
