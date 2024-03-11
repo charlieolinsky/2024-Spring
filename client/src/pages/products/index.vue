@@ -54,6 +54,12 @@ const total = computed(() =>
       :product="product"
       @addToCart="addToCart"
     />
+    <ProductCard
+      v-for="product in products"
+      :key="product.id"
+      :product="product"
+      @addToCart="addToCart"
+    />
   </div>
 
   <FlyOut>
