@@ -2,6 +2,7 @@
 import { ref, computed } from "vue";
 import { type Product, getProducts } from "@/model/products";
 import ProductCard from "@/components/ProductCard.vue";
+import FlyOut from "@/components/FlyOut.vue";
 
 //This is a common pattern for retreiving data from an API
 const products = ref([] as Product[]);
@@ -55,7 +56,7 @@ const total = computed(() =>
     />
   </div>
 
-  <div class="flyout">
+  <FlyOut>
     <div class="flyout-content">
       <h1 class="title">The Cart</h1>
       <ul class="cart">
@@ -66,7 +67,7 @@ const total = computed(() =>
       </ul>
       {{ cart.length }} items in cart for a total of ${{ total }}
     </div>
-  </div>
+  </FlyOut>
 </template>
 
 <style scoped>
@@ -75,38 +76,7 @@ const total = computed(() =>
   flex-wrap: wrap;
   justify-content: space-around;
 }
-.card {
-  flex-basis: 15rem;
-  flex-grow: 1;
-  margin: 0.5rem;
-}
-h3 {
-  font-weight: bold;
-}
-.price {
-  font-weight: bold;
-  font-size: xx-large;
-  color: hotpink;
-  float: right;
-}
-.flyout {
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 20rem;
-  height: 100%;
-  background-color: white;
-  border: 1px solid #ccc;
-  box-shadow: -1px 0 5px 0 rgba(0, 0, 0, 0.5);
-  z-index: 100;
-  transform: translateX(80%);
-  transition: transform 1s;
-  padding: 1rem;
-}
-.flyout.open,
-.flyout:hover {
-  transform: translateX(0);
-}
+
 .cart li {
   display: flex;
   align-items: center;
