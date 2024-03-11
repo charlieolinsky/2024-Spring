@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
 import { type Product, getProducts } from "@/model/products";
+import ProductCard from "@/components/ProductCard.vue";
 
 //This is a common pattern for retreiving data from an API
 const products = ref([] as Product[]);
@@ -46,20 +47,12 @@ const total = computed(() =>
 
 <template>
   <div class="product-list">
-    <div v-for="product in products" :key="product.id" class="card">
-      <div class="card-image">
-        <img :src="product.thumbnail" :alt="product.title" />
-      </div>
-      <div class="card-content">
-        <p class="price">${{ product.price }}</p>
-        <h3>{{ product.title }}</h3>
-        <i>{{ product.brand }}</i>
-        <p class="desc">{{ product.description }}</p>
-        <button class="button is-primary" @click="addToCart(product)">
-          Add to Cart
-        </button>
-      </div>
-    </div>
+    <ProductCard
+      v-for="product in products"
+      :key="product.id"
+      :product="product"
+      @addToCart="addToCart"
+    />
   </div>
 
   <div class="flyout">
