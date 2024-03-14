@@ -1,14 +1,17 @@
 <script setup lang="ts">
-  import { ref } from 'vue';
-  import { RouterLink } from 'vue-router';
+import { RouterLink } from 'vue-router';
+import { ref } from 'vue';
+import { count, isOpen } from '@/viewModel/cart';
 
-  let isActive = ref(false);
+let isActive = ref(false);
 
-  const toggleMenu = () => {
-    isActive.value = !isActive.value;
-    console.log(isActive.value);
-  }
+function toggleMenu() {
+  isActive.value = !isActive.value;
+}
 
+function toggleCart() {
+  isOpen.value = !isOpen.value;
+}
 
 </script>
 
@@ -19,15 +22,14 @@
       <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
     </a>
 
-     <!-- && syntax is a shorthand for turnary operator -->
-    <a role="button" class="navbar-burger" :class="{ 'is-active': isActive }" @click="toggleMenu" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+    <a role="button" @click="toggleMenu" :class="{ 'is-active': isActive } " class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
     </a>
   </div>
 
-  <div id="navbarBasicExample" class="navbar-menu" :class="{ 'is-active': isActive }">
+  <div :class="{ 'is-active': isActive } " id="navbarBasicExample" class="navbar-menu"  >
     <div class="navbar-start">
       <RouterLink to="/" class="navbar-item">
         Home
@@ -65,6 +67,14 @@
     </div>
 
     <div class="navbar-end">
+
+      <div class="navbar-item">
+          <button class="button is-light" @click="toggleCart()" :class="{ shiftLeft : isOpen }">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="tag is-danger is-rounded sup-tag">{{ count }}</span>            
+          </button>
+      </div>
+
       <div class="navbar-item">
         <div class="buttons">
           <a class="button is-primary">
@@ -81,7 +91,17 @@
 </template>
 
 <style scoped>
-.router-link-active {
-  border-bottom: 2px solid #00d1b2;
-}
+
+    .router-link-active {
+        border-bottom: 2px solid #00d1b2;
+    }
+
+    .sup-tag {
+        transform: translate(-20%, -50%);
+    }
+
+    .shiftLeft {
+        transform: translateX(-100%);
+        transition: transform 1s ease-in-out;
+    }
 </style>
