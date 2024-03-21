@@ -2,6 +2,7 @@
     NodeJS using the CommonJS Module System, not ESModules
 */
 const express = require('express'); //this is an artifact of CommonJS
+const users = require('./controllers/users')
 
 const app = express();
 const PORT = 3000;
@@ -11,7 +12,8 @@ const PORT = 3000;
 //If we have a get request on the root path, send back hello world
 app.get('/', (req, res) => {
   res.send('Hello New Paltz!');
-});
+})
+.use('/users', users)
 
 //this allows the app to conitnue listening for requests
 app.listen(PORT, () => {
