@@ -1,6 +1,3 @@
-/* B"H
- */
-
 /** @type { { items: User[] } } */
 const data = require("../data/users.json");
 
@@ -69,15 +66,15 @@ function update(user) {
 
 /**
  * @param {number} id
- * @returns {boolean}
+ * @returns {User | null}
  * */
 function remove(id) {
   const index = data.items.findIndex((item) => item.id == id);
   if (index >= 0) {
-    data.items.splice(index, 1);
-    return true;
+    const deleted = data.items.splice(index, 1);
+    return deleted[0];
   }
-  return false;
+  return null;
 }
 
 module.exports = {
