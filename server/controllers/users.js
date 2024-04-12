@@ -17,12 +17,13 @@ app
   })
   .get("/search", (req, res) => {
     const search = req.query.q;
+    if (typeof search !== "string") throw new Error("search is required");
     const result = users.search(search);
     res.send(result);
   })
   .get("/:id", (req, res) => {
     const id = req.params.id;
-    const user = users.get(id);
+    const user = users.get(+id);
     res.send(user);
   })
   .post("/", (req, res) => {
@@ -38,7 +39,7 @@ app
   })
   .delete("/:id", (req, res) => {
     const id = req.params.id;
-    const result = users.remove(id);
+    const result = users.remove(+id);
     res.send(result);
   });
 
