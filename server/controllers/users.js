@@ -1,5 +1,3 @@
-/* B"H
- */
 const users = require("../models/users");
 const express = require("express");
 const app = express.Router();
@@ -19,7 +17,7 @@ const app = express.Router();
  * */
 
 app
-  .get("/", (req, res) => {
+  .get("/", (req, res, next) => {
     const all = users.getAll();
     /** @type { UserDataListEnvelope } */
     const response = {
@@ -29,7 +27,7 @@ app
     };
     res.send(response);
   })
-  .get("/search", (req, res) => {
+  .get("/search", (req, res, next) => {
     const search = req.query.q;
     if (typeof search !== "string") throw new Error("search is required");
     const result = users.search(search);
@@ -41,7 +39,7 @@ app
     };
     res.send(response);
   })
-  .get("/:id", (req, res) => {
+  .get("/:id", (req, res, next) => {
     const id = req.params.id;
     /** @type { UserDataEnvelope } */
     const response = {
@@ -50,7 +48,7 @@ app
     };
     res.send(response);
   })
-  .post("/", (req, res) => {
+  .post("/", (req, res, next) => {
     const user = req.body;
     const result = users.add(user);
 
@@ -62,7 +60,7 @@ app
 
     res.send(response);
   })
-  .patch("/:id", (req, res) => {
+  .patch("/:id", (req, res, next) => {
     const user = req.body;
     user.id = req.params.id;
     const result = users.update(user);
@@ -75,7 +73,7 @@ app
 
     res.send(response);
   })
-  .delete("/:id", (req, res) => {
+  .delete("/:id", (req, res, next) => {
     const id = req.params.id;
     const result = users.remove(+id);
 
