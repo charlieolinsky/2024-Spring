@@ -1,7 +1,7 @@
 const express = require("express");
 const users = require("./controllers/users");
-/* B"H
 
+/*
 Four types of Asynchronous code:
     1. Node Style Callbacks
     2. Pipelining
@@ -17,7 +17,13 @@ Four types of Asynchronous code:
 const app = express();
 const PORT = 3000;
 
-app.use(express.json());
+app.use(express.json()).use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "*");
+  res.setHeader("Access-Control-Allow-Headers", "*");
+
+  next();
+});
 
 app
   .get("/", (req, res) => {
