@@ -1,4 +1,4 @@
-import { rest } from "./myFetch";
+import { api } from "./myFetch";
 
 export interface User {
   id: number;
@@ -25,7 +25,7 @@ export interface Address {
   state: string;
 }
 
-export async function getUsers(): Promise<User[]> {
-  const data = await rest("http://localhost:3000/api/v1/users");
+export async function getUsers() {
+  const data = await api<User[]>("users");
   return data.data;
 }
