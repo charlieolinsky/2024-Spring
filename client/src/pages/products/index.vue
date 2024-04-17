@@ -3,12 +3,14 @@ import { ref, computed } from "vue";
 import { type Product, getProducts } from "@/model/products";
 import ProductCard from "@/components/ProductCard.vue";
 import FlyOut from "@/components/FlyOut.vue";
-import { addToCart } from "@/viewModel/cart";
+import { addToCart, isOpen } from "@/viewModel/cart";
 import ShoppingCart from "@/components/ShoppingCart.vue";
 
-//This is a common pattern for retreiving data from an API
 const products = ref([] as Product[]);
-products.value = getProducts();
+
+getProducts().then((data) => {
+  products.value = data.data;
+});
 </script>
 
 <template>
@@ -19,15 +21,9 @@ products.value = getProducts();
       :product="product"
       @addToCart="addToCart"
     />
-    <ProductCard
-      v-for="product in products"
-      :key="product.id"
-      :product="product"
-      @addToCart="addToCart"
-    />
   </div>
 
-  <FlyOut>
+  <FlyOut :isOpen="isOpen">
     <ShoppingCart />
   </FlyOut>
 </template>
